@@ -1,0 +1,22 @@
+{% extends 'recipe/base.html'%}
+
+        {% block title %}
+            Сайт рецептов
+        {% endblock %}
+
+        {% block body %}
+        <a href="{% url 'recipe:create_recipe' %}">Добавить рецепт</a>
+        <a href="{% url 'recipe:create_category' %}">Добавить категорию</a><br>
+                {% for recipe in object_list %}
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.image.name }}"><br>
+                        <li>
+                         <a href="{% url 'recipe:detail_recipe' pk=recipe.pk %}">{{ recipe.name }}</a><br>
+                        {{ recipe.get_short_description }}<br>
+                        Время пригтовления: {{ recipe.time }}<br>
+                        <li/>
+                {% empty %}
+
+                <h1>Пока нет рецептов<h1/>
+
+                {% endfor %}
+        {% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'recipe/base.html'%}
+
+  {% block title %}
+      Рецепт
+  {% endblock %}
+
+  {% block body %}
+      <h1>{{ object }}<h1/>
+      <img src="{{ object.image.url }}" alt="{{ object.image.name }}"><br>
+      <h4>Описание: <h4/>
+          {{ object.description }}
+      <h4>Ингредиенты: <h4/>
+          {{ object.ingredients }}
+      <h4>Шаги приготовления: <h4/>
+          {{ object.steps }}<br>
+      <a href="{% url 'recipe:update_recipe' pk=object.pk %}">Изменить рецепт</a>
+      <a href="{% url 'recipe:index'%}">Назад к списку рецептов</a>
+  {% endblock %}

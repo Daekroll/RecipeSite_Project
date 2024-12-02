@@ -1,0 +1,14 @@
+{% extends 'recipe/base.html'%}
+
+   {% block title %}
+        Редактирование рецепта
+   {% endblock %}
+
+   {% block body %}
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Сохранить">
+            </form>
+
+   {% endblock %}
