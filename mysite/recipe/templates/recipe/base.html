@@ -2,15 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        body {
+            background-color: #f7defb;
+        }
+        body a {
+            font-size: 20px;
+            text-decoration: none;
+        }
+        body a:hover {
+            color: red; /* Цвет ссылки при наведении */
+        }
+
+        .auth {
+            font-size: 20px;
+        }
+
+        .user_content {
+            text-align: right;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+    </style>
     <title>
         {% block title %}
-            Base title
-        {% endblock %}
+            Base Title
+        {% endblock%}
     </title>
 </head>
 <body>
-        {% block body %}
-            Base body
-        {% endblock %}
+    <div class="user_content">
+        {% if not user.is_authenticated %}
+            <p class="auth">Вы не авторизованы</p>
+        {% else %}
+            <p class="auth" >Авторизован {{ user }}</p>
+        {% endif %}
+        {% if user.is_staff %}
+           <p class="auth"> <a href="{% url 'admin:index' %}">Админ-панель</a></p>
+        {% endif %}
+
+        {% if not user.is_authenticated %}
+           <p class="auth"> <a href="{% url 'account:login' %}">Вход</a></p>
+           <p class="auth"> <a href="{% url 'account:register' %}">Регистрация</a></p>
+        {% else %}
+           <p class="auth"> <a href="{% url 'account:logout' %}">Выход</a></p>
+        {% endif %}
+    </div>
+    {% block body %}
+        <h1>Base body</h1>
+    {% endblock%}
 </body>
 </html>

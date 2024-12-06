@@ -1,22 +1,31 @@
 {% extends 'recipe/base.html'%}
 
-        {% block title %}
-            Сайт рецептов
-        {% endblock %}
+    {% block title %}
+        Сайт рецептов
+    {% endblock%}
 
-        {% block body %}
+    {% block body %}
+        <h1>Список рецептов</h1>
+        <ol>
+            {% for recipe in object_list %}
+                <div>
+                    <li>
+                        <a href="{% url 'recipe:detail_recipe' pk=recipe.pk %}">{{ recipe.name }}</a>
+                        <ul>
+                            <img style="width: 300px" src="{{ recipe.image.url }}" alt="{{ recipe.image.name }}">
+                            <li>{{ recipe.get_short_description }}</li>
+                            <li><p>Время приготовления: {{ recipe.time }}</p></li>
+                            <li><p>Автор рецепта: {{ recipe.author }}</p></li>
+                            <li><p>Категория: {{ recipe.category }}</p></li>
+                            <li><p>Дата добавления: {{ recipe.date_create }}</p></li>
+                        </ul>
+                    </li>
+                </div><br>
+            {% empty %}
+                <p>Еще нет ни одного рецепта...</p>
+            {% endfor %}
+        </ol>
+
         <a href="{% url 'recipe:create_recipe' %}">Добавить рецепт</a>
-        <a href="{% url 'recipe:create_category' %}">Добавить категорию</a><br>
-                {% for recipe in object_list %}
-                    <img src="{{ recipe.image.url }}" alt="{{ recipe.image.name }}"><br>
-                        <li>
-                         <a href="{% url 'recipe:detail_recipe' pk=recipe.pk %}">{{ recipe.name }}</a><br>
-                        {{ recipe.get_short_description }}<br>
-                        Время пригтовления: {{ recipe.time }}<br>
-                        <li/>
-                {% empty %}
 
-                <h1>Пока нет рецептов<h1/>
-
-                {% endfor %}
-        {% endblock %}
+    {% endblock%}
